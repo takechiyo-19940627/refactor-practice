@@ -29,7 +29,6 @@ function statement (invoice, plays) {
   let totalAmount = 0;
   let volumeCredits = 0;
   let result = `Statement for ${invoice.customer}\n`;
-  const format = new Intl.NumberFormat("en-US", {style: "currency", currency: "USD", minimumFranctionDigits: 2}).format;
 
   for (let perf of invoice.performances) {
     // ボリューム特典のポイントを加算
@@ -75,5 +74,11 @@ function statement (invoice, plays) {
     volumeCredits += Math.max(aPerformance.audience - 30, 0);
     if ("comedy" === playFor(aPerformance).type) volumeCredits += Math.floor(aPerformance.audience / 5);
     return volumeCredits;
+  }
+
+  function format(aNumber) {
+    return new Intl.NumberFormat("en-US",
+                { style: "currency", currency: "USD",
+                  minimumFranctionDigits: 2 }).format(aNumber);
   }
 }
