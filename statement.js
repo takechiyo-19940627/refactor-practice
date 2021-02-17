@@ -27,27 +27,22 @@ statement (invoices[0], plays);
 
 function statement (invoice, plays) {
   let totalAmount = 0;
-  let volumeCredits = 0;
   let result = `Statement for ${invoice.customer}\n`;
 
   for (let perf of invoice.performances) {
-    // ボリューム特典のポイントを加算
-    volumeCredits += volumeCreditsFor(perf);
-    // 喜劇のときは10人につきさらにポイントを加算
-    if ("comedy" === playFor(perf).type) volumeCredits += Math.floor(perf.audience / 5);
-    // 注文の内訳を出力
     result += `${playFor(perf).name}: ${usd(amountFor(perf))} (${perf.audience} seats)\n`;
     totalAmount += amountFor(perf);
   }
+
   result += `Amount owed is ${usd(totalAmount)}\n`;
-  result += `You earned ${volumeCredits} credits\n`;
+  result += `You earned ${totalVolumeCredits()} credits\n`;
   return result;
 
   function amountFor(aPerformance) {
     let result = 0;
     switch (playFor(aPerformance).type) {
       case "tragedy":
-        result = 400000;
+        result = 40000;
         if (aPerformance.audience > 30) {
           result += 1000 * (aPerformance.audience - 30);
         }
@@ -55,7 +50,7 @@ function statement (invoice, plays) {
       case "comedy":
         result = 30000;
         if (aPerformance.audience > 20) {
-          result += 1000 + 500 * (aPerformance.audience - 20);
+          result += 10000 + 500 * (aPerformance.audience - 20);
         }
         result += 300 * aPerformance.audience;
         break;
@@ -80,5 +75,13 @@ function statement (invoice, plays) {
     return new Intl.NumberFormat("en-US",
                 { style: "currency", currency: "USD",
                   minimumFranctionDigits: 2 }).format(aNumber/100);
+  }
+
+  function totalVolumeCredits() {
+    let volumeCredits = 0;
+    for (let perf of invoice.performances) {
+      volumeCredits += volumeCreditsFor(perf);
+    }
+    return volumeCredits;
   }
 }
