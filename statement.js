@@ -1,3 +1,5 @@
+// import createStatementData  from "./createStatementData.js";
+
 // NOTE: 必要なデータ
 var plays = {
   "hamlet": {"name": "Hamlet", "type": "tragedy"},
@@ -26,12 +28,34 @@ var invoices = [
 statement (invoices[0], plays);
 
 function statement (invoice, plays) {
+  return renderPlainText(createStatementData(invoice, plays));
+}
+
+function renderPlainText(data) {
+  let result = `Statement for ${data.customer}\n`;
+  for (let perf of data.performances) {
+    result += `${perf.play.name}: ${usd(perf.amount)} (${perf.audience} seats)\n`;
+  }
+
+  result += `Amount owed is ${usd(data.totalAmount)}\n`;
+  result += `You earned ${data.totalVolumeCredits} credits\n`;
+  return result;
+
+  function usd(aNumber) {
+    return new Intl.NumberFormat("en-US",
+                { style: "currency", currency: "USD",
+                  minimumFranctionDigits: 2 }).format(aNumber/100);
+  }
+}
+
+// TODO:別ファイルに分ける
+function createStatementData(invoice, plays) {
   const statementData = {};
   statementData.customer = invoice.customer;
   statementData.performances = invoice.performances.map(enrichPerformance);
   statementData.totalAmount = totalAmount(statementData);
   statementData.totalVolumeCredits = totalVolumeCredits(statementData);
-  return renderPlainText(statementData, plays);
+  return statementData;
 
   function enrichPerformance(aPerformance) {
     const result = Object.assign({}, aPerformance);
@@ -83,19 +107,3 @@ function statement (invoice, plays) {
   }
 }
 
-function renderPlainText(data) {
-  let result = `Statement for ${data.customer}\n`;
-  for (let perf of data.performances) {
-    result += `${perf.play.name}: ${usd(perf.amount)} (${perf.audience} seats)\n`;
-  }
-
-  result += `Amount owed is ${usd(data.totalAmount)}\n`;
-  result += `You earned ${data.totalVolumeCredits} credits\n`;
-  return result;
-
-  function usd(aNumber) {
-    return new Intl.NumberFormat("en-US",
-                { style: "currency", currency: "USD",
-                  minimumFranctionDigits: 2 }).format(aNumber/100);
-  }
-}
