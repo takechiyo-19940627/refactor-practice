@@ -25,6 +25,8 @@ var invoices = [
     ]
   }
 ];
+
+// NOTE: 実行箇所
 statement (invoices[0], plays);
 
 function statement (invoice, plays) {
@@ -104,6 +106,12 @@ function createStatementData(invoice, plays) {
 
   function totalVolumeCredits(data) {
     return data.performances.reduce((total, p) => total + p.volumeCredits, 0);
+  }
+
+  class PerformanceCalculator {
+    constructor(aPerfoermance) {
+      this.peformance = aPerfoermance;
+    }
   }
 }
 
