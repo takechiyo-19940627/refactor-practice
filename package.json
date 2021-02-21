@@ -1,0 +1,25 @@
+{
+  "name": "refactoring_practice",
+  "version": "1.0.0",
+  "description": "",
+  "main": "createStatementData.js",
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/takechiyo-19940627/refactor-practice.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/takechiyo-19940627/refactor-practice/issues"
+  },
+  "homepage": "https://github.com/takechiyo-19940627/refactor-practice#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "babel-preset-latest": "^6.24.1",
+    "chai": "^4.3.0",
+    "mocha": "^8.3.0"
+  }
+}
