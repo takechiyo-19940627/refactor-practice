@@ -9,7 +9,7 @@ describe('province', function() {
   it('shortfall', function() {
     expect(asia.shortfall).equal(5);
   });
-  it ('profit', function() {
+  it('profit', function() {
     expect(asia.profit).equal(230);
   });
 });
