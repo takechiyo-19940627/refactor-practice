@@ -18,6 +18,7 @@
   "homepage": "https://github.com/takechiyo-19940627/refactor-practice#readme",
   "dependencies": {},
   "devDependencies": {
+    "babel-preset-latest": "^6.24.1",
     "chai": "^4.3.0",
     "mocha": "^8.3.0"
   }
