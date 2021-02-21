@@ -53,6 +53,19 @@ describe('no producers', function() {
   });
 });
 
+describe('string for producers', function() {
+  it('', function() {
+    const data = {
+      name: "String producers",
+      producers: "",
+      demand: 30,
+      price: 20
+    };
+    const prov = new Province(data);
+    expect(prov.shortfall).equal(0);
+  });
+});
+
 // NOTE: 以下実装のコード
 // NOTE: データ生成用
 function sampleProvidenceData() {
