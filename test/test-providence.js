@@ -1,3 +1,21 @@
+// NOTE:テストコード
+const assert = require('assert');
+const expect = require('chai').expect;
+
+describe('province', function() {
+  let asia;
+  beforeEach(function() {
+    asia = new Province(sampleProvidenceData());
+  });
+  it('shortfall', function() {
+    expect(asia.shortfall).equal(5);
+  });
+  it ('profit', function() {
+    expect(asia.profit).equal(230);
+  });
+});
+
+// NOTE: 以下実装のコード
 // NOTE: データ生成用
 function sampleProvidenceData() {
   return {
@@ -15,7 +33,7 @@ function sampleProvidenceData() {
 class Province {
   constructor(doc) {
     this._name = doc.name;
-    this._producers = doc.producers;
+    this._producers = [];
     this._totalProduction = 0;
     this._demand = doc.demand;
     this._price = doc.price;
@@ -32,7 +50,7 @@ class Province {
   get totalProduction() { return this._totalProduction; }
   set totalProduction(arg) { this._totalProduction = arg; }
   get demand() { return this._demand; }
-  set demand(arg) { return this._demand = arg; }
+  set demand(arg) { return this._demand = parseInt(arg); }
   get price() { return this._price; }
   set price(arg) { this._price = parseInt(arg); }
 
@@ -41,7 +59,7 @@ class Province {
   }
 
   get profit() {
-    return this._demand - this.demandCost;
+    return this.demandValue - this.demandCost;
   }
 
   get demandCost() {
